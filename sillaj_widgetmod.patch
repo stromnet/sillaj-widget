@@ -1,0 +1,34 @@
+diff -uprN sillaj_0_2_12/getProject_xmlhttp.php sillaj/getProject_xmlhttp.php
+--- sillaj_0_2_12/getProject_xmlhttp.php	Thu Jan  1 01:00:00 1970
++++ sillaj/getProject_xmlhttp.php	Mon Apr 23 00:47:36 2007
+@@ -0,0 +1,7 @@
++<?php
++header('Content-Type: text/javascript; charset=iso-8859-1');
++require('./inc/config.php');
++$project = new Project;
++$smarty->assign_by_ref('arrProject', $project->get());
++$smarty->display('frmEvent_projOption.tpl');
++?>
+diff -uprN sillaj_0_2_12/login_xmlhttp.php sillaj/login_xmlhttp.php
+--- sillaj_0_2_12/login_xmlhttp.php	Thu Jan  1 01:00:00 1970
++++ sillaj/login_xmlhttp.php	Mon Apr 23 00:49:27 2007
+@@ -0,0 +1,9 @@
++<?php
++header('Content-Type: text/javascript; charset=iso-8859-1');
++require('./inc/config.php');
++// Validate form
++if (count($_POST) != 0) {
++    $user->execAuthent(false);
++}
++?>
++// require empty line here.. for some reason
+diff -uprN sillaj_0_2_12/templates/default/frmEvent_projOption.tpl sillaj/templates/default/frmEvent_projOption.tpl
+--- sillaj_0_2_12/templates/default/frmEvent_projOption.tpl	Thu Jan  1 01:00:00 1970
++++ sillaj/templates/default/frmEvent_projOption.tpl	Sun Apr 22 23:02:56 2007
+@@ -0,0 +1,6 @@
++{* called by getProject_xmlhttp.php *}
++var arrXmlhttp = new Array(
++{foreach key=intProjectId item=strProject name=i from=$arrProject}
++  Array({$intProjectId}, '{$strProject|addslashes}'){if ! $smarty.foreach.i.last},{/if}
++{/foreach}
++);

@@ -1,0 +1,11 @@
+Sillaj-Widget is a OSX Dashboard Widget for the Timetracking system Sillaj (http://sillaj.sourceforge.net/).
+
+Note that before version 0.2.13 of Sillaj a [source:/trunk/Sillaj-widget/sillaj_widgetmod.patch patch] (included in repo) needs to be applied:
+
+sillaj_0_2_12$ patch -p1 < sillaj_widgetmod.patch
+
+
+Licensed under GPL, do what you want with it but inform me of any usefull updates :)
+
+
+(c) Johan Ström 2007

@@ -1,0 +1,90 @@
+body {
+	margin: 0;
+	width: 320px;
+	height: 300px;
+	font-family: Verdana;
+	font-size: 8pt;
+	color: #FFFFFF;
+}
+
+th
+{
+	font-size: 8pt;
+	text-align:right;
+}
+
+INPUT,SELECT
+{
+	width: 150px;
+	height: 20px;
+}
+
+.inputFormat
+{
+	font-size: 7pt;
+}
+
+#front {
+	display: block;
+	width: 320px;
+	height: 200px;
+	background: black;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+#back
+{
+	width: 350px;
+	height: 120px;
+ 	display: none;
+	background: black;
+	padding-top: 20px;
+	padding-left: 20px;
+}
+
+#logo 
+{
+	position:absolute;
+	top: 10px;
+	left: 260px;
+}
+
+#back #logo 
+{ 
+	left: 290px; 
+} 
+
+#status
+{
+	position: absolute;
+	top: 190px;
+	width: 240px;
+	left: 5px;
+}
+
+.flip {
+	position: absolute;
+	left: 280px; 
+	top: 10px;
+	width: 13px;
+	height: 13px;
+}
+
+#flip {
+	opacity: 0;
+	background:  url(file:///System/Library/WidgetResources/ibutton/white_i.png); 
+	background-repeat:  no-repeat;
+}
+
+#fliprollie {
+	display: none;
+	opacity: 0.25;
+	background:  url(file:///System/Library/WidgetResources/ibutton/white_rollie.png); 
+	background-repeat:  no-repeat;
+}
+
+
+#saveButton {
+	margin-left: 80px;
+}
+

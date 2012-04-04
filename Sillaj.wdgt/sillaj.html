@@ -1,0 +1,55 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<style type="text/css">
+			@import "sillaj.css";
+		</style>
+		<script language="JavaScript" type="text/javascript" src="Fader.js" charset="utf-8"/>
+		<script language="JavaScript" type="text/javascript" src="file:///System/Library/WidgetResources/button/genericButton.js" charset="utf-8"/>
+		<script type='text/javascript' src='sillaj.js' charset='utf-8'/>
+	</head>
+
+	<body onload='setup();'>
+		<div id="front" onmousemove="flipper.fadeIn();" onmouseout="flipper.fadeOut();">
+			<img src="logo_sillaj.png" id="logo"/>
+			<div id="Sillaj">
+				<table>
+					<tr><th>Project</th><td><select id="selProj"></select></td></tr>
+					<tr><th>Task</th><td><select id="selTask"></select></td></tr>
+					<tr><th>Date</th><td><select id="selDate"></select></td></tr>
+					<tr><th>Start</th><td><input type="text" id="txtStart"/></td><td><span id="startButton"></span></td></tr>
+					<tr><th>End</th><td><input type="text" id="txtEnd"/></td><td><span id="endButton"></span></td></tr>
+					<tr><th><small>or</small> Duration</th><td><input type="txt" id="txtDur"/></td><td class="inputFormat">HH:MM[:ss]</td></tr>
+					<tr><th>Remark</th><td><input type="text" id="txtRem"/></td></tr>
+					<tr><th></th><td></td><td><span id="submitButton"></span></td></tr>
+				</table>
+				<div id="status"></div>
+			</div>
+			<span class='flip' id='fliprollie'></span>
+			<span class='flip' id='flip' onclick='showBackside(event);' onmouseover='document.getElementById("fliprollie").style.display="block";' onmouseout='document.getElementById("fliprollie").style.display="none";'></span>
+		</div>
+		<div id="back">
+			<img src="logo_sillaj.png" id="logo"/>
+			<div id="SillajConf">
+			<table>
+				<tr><th>Base URL</th><td><input id="txtBaseURL" /></td></tr>
+				<tr><th>Username</th><td><input id="txtUsername" /></td></tr>
+				<tr><th>Password</th><td><input id="txtPassword" type="password"/></td></tr>
+				<tr><th>Round Time To</th><td>
+							<select id="selRound"> 
+								<option value="1">1 Minute</option> 
+								<option value="5">5 Minutes</option> 
+								<option value="10">10 Minutes</option> 
+								<option value="15">15 Minutes</option> 
+								<option value="20">20 Minutes</option> 
+								<option value="30">Half hour</option> 
+								<option value="60">Hour</option> 
+							</select>
+						</td> 
+					</tr>
+				</table>
+				<span id="saveButton"></span>
+			</div>
+		</div>	
+	</body>
+</html>
