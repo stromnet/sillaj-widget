@@ -19,6 +19,11 @@ INPUT,SELECT
 	height: 20px;
 }
 
+textarea {
+	width: 100%;
+	height: 100px;
+}
+
 .inputFormat
 {
 	font-size: 7pt;

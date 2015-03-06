@@ -6,17 +6,35 @@ var conf = {'baseURL':'', 'username':'', 'password':'', 'round':1,
 var loggedIn = null;
 var lastProjectUpdate = null;
 var cookie = "";
+var submitting = false;
 
-function doRequest(method, url, data, cb)
+function log() {
+	var str = "";
+	for(var n=0; n < arguments.length; n++) {
+		str+= arguments[n] + " ";
+	}
+	document.getElementById('log').value += str + "\n";
+}
+
+function doRequest(method, url, data, cb, noForceLogin)
 {
+	noForceLogin = !!noForceLogin;
 	var xmlconn=new XMLHttpRequest();
 	xmlconn.open(method, conf['baseURL']+"/"+url, true);
 	xmlconn.setRequestHeader("Cookie", cookie);
+	xmlconn.setRequestHeader('Accept', 'application/json');
 	xmlconn.onreadystatechange=function()
 		{
-			if(xmlconn.readyState==4 && xmlconn.status == 200)
+			if(xmlconn.readyState==4)
 			{
 				var r = xmlconn.responseText;
+				log(method, url, JSON.stringify(data), ", Status: ", xmlconn.status, r);
+				if(xmlconn.status == 401 && !noForceLogin) {
+					login(true, function(){
+						doRequest(method, url, data, cb, true);
+					});
+					return;
+				}
 				if(r.match(/error/))
 				{
 					var re = new RegExp(/<p class="error">(.*)<\/p>/);
@@ -36,7 +54,6 @@ function doRequest(method, url, data, cb)
 					if(cb)
 						cb(xmlconn);
 				}
-
 			}
 		}
 
@@ -90,6 +107,7 @@ function postEvent(data, cb, recursive)
 						{
 							// Failed to post event due to login failure...
 							document.getElementById('status').innerHTML+="Failed to post event!";
+							submitting = false;
 						}
 						else
 						{
@@ -102,6 +120,7 @@ function postEvent(data, cb, recursive)
 						// assume OK
 						if(cb)
 							cb();
+						submitting = false;
 					}
 				}
 			);
@@ -112,12 +131,21 @@ function postEvent(data, cb, recursive)
 function updateProjects()
 {
 	login(false, function(){
-		if(lastProjectUpdate != null && (new Date()).getTime()/1000 < (lastProjectUpdate.getTime()/1000 + 86400))
+		var dom = document.getElementById('selProj');
+		if(lastProjectUpdate != null &&
+				(new Date()).getTime()/1000 < (lastProjectUpdate.getTime()/1000 + 86400) &&
+				dom.hasChildNodes()
+				) {
+			log("Skipping updateProjects");
 			return;
+		}
 
-		updateXmlArrayDropdownList("getProject_xmlhttp.php", document.getElementById('selProj'), true, function(){
-				lastProjectUpdate = new Date();
-			});
+		updateXmlArrayDropdownList("getProject_xmlhttp.php",
+				dom,
+				true,
+				function(){
+					lastProjectUpdate = new Date();
+				});
 		}
 	);
 }
@@ -210,6 +238,8 @@ function refreshPage()
 function submitEvent()
 {
 	var data = {}
+	if(submitting)
+		return;
 
 	if(	document.getElementById('selTask').selectedIndex == -1 ||
 			document.getElementById('selProj').selectedIndex <= 0 
@@ -233,6 +263,8 @@ function submitEvent()
 		return;
 	}
 
+	submitting = true;
+
 	// all ok? submit
 	postEvent(data, function()
 	{
@@ -242,6 +274,7 @@ function submitEvent()
 		document.getElementById('txtDur').value = '';
 		document.getElementById('txtRem').value = '';
 		setTimeout(function() {document.getElementById('status').innerHTML='';}, 5000);  // clear saved label
+//		document.getElementById('submitButton').disabled = false;
 	});
 }
 
@@ -308,14 +341,17 @@ function setup() {
 	refreshPage();
 
 	setTimeout("resizeMe()", 1000);
+	log("Hi there, sillaj widghet here");
 	return 0;
 }
 
 
 function onHide () {
+	log("sillaj onHide");
 }
 
 function onShow() {
+	log("sillaj onShow");
 	refreshPage();
 //	loadPage();
 }
