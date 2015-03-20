@@ -166,12 +166,16 @@ function updateTasks()
 
 function updateXmlArrayDropdownList (url, droplist, blank, cb)
 {
+	var lastSel;
+	if(droplist.selectedIndex != -1){
+		lastSel = droplist.options[droplist.selectedIndex].value;
+	}
+
 	doRequest("GET", url, null, function(c)
 		{
 			// import arrXmlhttp
 			eval(c.responseText);
 
-			var lastSel;
 			while(droplist.hasChildNodes())
 				droplist.removeChild(droplist.childNodes[0]);
 
@@ -179,12 +183,19 @@ function updateXmlArrayDropdownList (url, droplist, blank, cb)
 			if(blank)
 				droplist.options[index++] = new Option("", 0);
 
+			var selectedIndex = -1;
 			for(var i in arrXmlhttp)
 			{
-				var k = arrXmlhttp[i][0];
+				var k = parseInt(arrXmlhttp[i][0], 10);
 				var v = arrXmlhttp[i][1];
+				if(k == lastSel) {
+					selectedIndex = index;
+				}
+
 				droplist.options[index++] = new Option(v,k);
 			}
+
+			droplist.selectedIndex = selectedIndex;
 
 			if(cb)
 				cb();
