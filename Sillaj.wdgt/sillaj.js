@@ -173,8 +173,7 @@ function updateXmlArrayDropdownList (url, droplist, blank, cb)
 
 	doRequest("GET", url, null, function(c)
 		{
-			// import arrXmlhttp
-			eval(c.responseText);
+			var result = JSON.parse(c.responseText);
 
 			while(droplist.hasChildNodes())
 				droplist.removeChild(droplist.childNodes[0]);
@@ -184,10 +183,10 @@ function updateXmlArrayDropdownList (url, droplist, blank, cb)
 				droplist.options[index++] = new Option("", 0);
 
 			var selectedIndex = -1;
-			for(var i in arrXmlhttp)
+			for(var k in result)
 			{
-				var k = parseInt(arrXmlhttp[i][0], 10);
-				var v = arrXmlhttp[i][1];
+				var k = parseInt(k, 10);
+				var v = result[k];
 				if(k == lastSel) {
 					selectedIndex = index;
 				}
