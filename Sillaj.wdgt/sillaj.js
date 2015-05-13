@@ -276,6 +276,7 @@ function submitEvent()
 	submitting = true;
 
 	// all ok? submit
+	document.getElementById('status').innerHTML="Saving...";
 	postEvent(data, function()
 	{
 		document.getElementById('status').innerHTML="Saved!";
