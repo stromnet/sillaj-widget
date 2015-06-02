@@ -62,7 +62,7 @@ function doRequest(method, url, data, cb, noForceLogin)
 	{
 		strData = "";
 		for(var i in data)
-			strData+=i+"="+escape(data[i])+"&"
+			strData+=i+"="+encodeURIComponent(data[i])+"&"
 	}
 
 	xmlconn.send(strData);
